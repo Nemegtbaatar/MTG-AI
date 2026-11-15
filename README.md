@@ -1,0 +1,36 @@
+# Modern Goldfish Tournament
+
+A Magic: The Gathering tournament in which players submit Modern decklists and an AI plays them. There is no interaction between players: each deck is played alone, and a game goes to the deck that wins first.
+
+**Status:** not yet open. Dates will be posted here and on Reddit.
+
+## How it works
+
+1. You submit a decklist. Nothing else is needed, and nothing else is used.
+2. The AI pilot reads the deck, works out how it wins, and plays it against a generic opponent to measure how fast it is.
+3. Decks are paired. Each deck adjusts its mulligans and play to its opponent's measured speed, and the faster deck wins the game.
+4. One special rule keeps games short: the deck on the play loses at the end of its turn 5 if it has not won.
+
+## Take part
+
+- **Submit a deck:** post it as text on Reddit, share a link to the list, or send it to the organizer by direct message to keep it private. Details are in [tournament.md](tournament.md).
+- **Test your deck first:** [instructions.md](instructions.md) shows how to run the same test at home with your own AI.
+- **Reddit thread:** link to be added.
+
+## Files
+
+| File | What it covers |
+|---|---|
+| [tournament.md](tournament.md) | Event rules: submissions, matches, the turn 5 rule, structure, schedule and settings |
+| [pilot.md](pilot.md) | How the AI plays a single deck |
+| [instructions.md](instructions.md) | Testing a deck with your own AI |
+| [rulings.md](rulings.md) | Challenges raised in review and the organizer's rulings |
+| [CHANGELOG.md](CHANGELOG.md) | Version history of the pilot and the rules |
+| `decks/` | One folder per deck: decklist, card sheet, deck plan, baseline profile, test positions, report |
+| `results/` | Pairings and results by round, standings, seeds and game logs |
+
+The `decks/` and `results/` folders are filled in as the event runs.
+
+## Notice
+
+This is an unofficial fan project. It is not affiliated with, approved or endorsed by Wizards of the Coast. Magic: The Gathering and its card names and text are property of Wizards of the Coast LLC. Card text is taken from Scryfall.
