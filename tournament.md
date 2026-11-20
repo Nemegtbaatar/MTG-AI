@@ -1,22 +1,20 @@
 # Tournament rules
 
-This file covers how the event is run: how decks are submitted, how two decks' results become a match, and how standings are decided. How a single deck is played is in `pilot.md`.
+This file covers how the event is run: submissions, review, the schedule, how match results become standings, and what is published. Every rule about how a deck is played and scored, including the turn 5 rule, the opponent, the baseline, match win and compute limits, is in `pilot.md`, and is not repeated here.
 
-Every value the organizer has to choose is in the Settings table at the end. Suggested values there are proposals until the organizer confirms them.
+The few values the organizer has to choose are in the Settings table at the end. Suggested values there are proposals until the organizer confirms them.
 
 ## The format in brief
 
-- Players submit Modern decklists. An AI pilot plays every deck.
-- There is no interaction between players. Each deck is played alone against an opponent that does nothing, and a game goes to the deck that wins first.
-- Every deck is played by the same procedure (`pilot.md`), from its decklist alone.
+- Players submit Modern decklists. An AI pilot plays every deck under `pilot.md`, from its decklist alone.
+- There is no interaction between players. Each deck plays a baseline run alone against a generic opponent, opponent A, and every deck is optimized against that same opponent.
+- Matches are not played as separate games. The result of every pairing is computed from the two decks' baseline profiles (`pilot.md`, 1.3).
 
 ## Decklists
 
 ### What is legal
 
-- 60 cards or more, with no more than four copies of any card other than basic lands.
-- Every card must be legal in Modern on the legality date (Settings). Legality is checked card by card on Scryfall.
-- Sideboards are not used. Any sideboard in a submission is ignored.
+A decklist is legal as `pilot.md`, 1.1 sets out, on the legality date (Settings). Any sideboard in a submission is ignored.
 
 ### How to submit
 
@@ -28,103 +26,48 @@ Submit by the deadline (Settings) in one of three ways:
 
 ### Decklist only
 
-The pilot is given card names and counts and nothing else. Strategy notes, combos and mulligan advice in a submission are not passed to the pilot.
+The pilot is given card names and counts and nothing else (`pilot.md`, 1.1). Strategy notes, combos and mulligan advice in a submission are not passed to it.
 
 ### Private lists
 
 - A private list stays private until the publication date (Settings).
 - Its card sheet, deck plan and game logs are published when the list is.
-- Its baseline profile is published with everyone else's, because opponents need it.
+- Its baseline profile is published with everyone else's, because match results are computed from it.
 
 ### Cards the pilot cannot model
 
-- The card sheet lists every clause the pilot could not model (`pilot.md`, section 1).
+- The card sheet lists every clause the pilot could not model and every choice it fixed instead of searching (`pilot.md`, Part 3).
 - A deck with unmodeled clauses is flagged to its submitter during review. The submitter may keep the deck with those clauses ignored, replace it, or withdraw it.
 
-## The opponent
+## Matches and standings
 
-Each deck plays alone against an opponent that never acts:
-
-- It starts at 20 life with a 7-card hand and a 53-card library, and draws a card each turn.
-- It plays no cards, controls no permanents and makes no choices.
-- A deck wins in any way the rules of Magic allow: the opponent at 0 life, 10 poison counters, the opponent drawing from an empty library, or a card that says so.
-
-## Baseline profiles
-
-Before any match, every deck plays a baseline run against opponent A, a generic opponent that wins on turn 2 in 25% of games, turn 3 in 50% and turn 4 in 25% (`pilot.md`, sections 2 and 3). The result is the deck's baseline profile: how often it wins on each turn, on the play and on the draw.
-
-- Every deck plays the same number of baseline games (Settings).
-- Profiles are published before round 1 and stay fixed for the whole event.
-- A profile is the only information a deck has about its opponent.
-
-## The turn 5 rule
-
-This is a tournament rule, not a rule of Magic.
-
-**The deck on the play loses the game at the end of its turn 5 if it has not won.**
-
-The rule keeps games short and limits the compute needed to simulate them. Its consequences:
-
-- The deck on the play has 5 turns. The deck on the draw has 4, because its turn 5 would come after the game has ended.
-- The deck on the draw wins any game in which the deck on the play does not win in time. It does not need to win by itself.
-- No game is drawn.
-
-## How a match is played
-
-### Preparation
-
-For a match between X and Y, each deck adjusts to the other's baseline profile (`pilot.md`, sections 2 and 3):
-
-- X's turn values are built from Y's profile, and Y's from X's.
-- Each deck measures its mulligan bars against those values and uses them for its play.
-- This is done once. Neither deck sees how the other adjusts to it.
-
-### Games
-
-A match is a fixed number of games (Settings), half with each deck on the play. In each game both decks are played alone, and the game is decided by the first of these to happen, in turn order:
-
-- **A deck wins.** If both would win on the same turn, the deck on the play wins, because it takes that turn first.
-- **A deck loses by its own actions,** such as life payments or an empty library. The other deck wins.
-- **The deck on the play ends its turn 5 without a win.** The deck on the draw wins.
-
-A deck's deal in game number n is the same in every match it plays.
-
-### Match result
-
-- The deck with more game wins takes the match.
-- A match is drawn if the leading deck's share of games is inside the draw band (Settings).
-
-## Tournament structure
-
-- **Fewer than 8 decks:** full round robin. Every deck plays every other deck once.
-- **8 decks or more:** Swiss pairings. Each round, decks with the same match points are paired, and no pair meets twice.
-- Match points and tiebreaks are in Settings.
+- **Every deck is paired with every other deck.** Because results are computed from profiles, a full round robin costs nothing extra.
+- **A match result** is each deck's match win against the other (`pilot.md`, 1.3). The two add up to 100%.
+- **Standings** are by average match win against all other decks. Ties are broken by match win against opponent A.
 
 ## Schedule
 
 The event runs in this order. Dates are in Settings.
 
 1. **Submissions close.**
-2. **Card sheets and deck reading.** The pilot writes each deck's card sheet, test positions and deck plan (`pilot.md`, sections 1, 8 and 14).
-3. **Compute limits published.** The same limits for every deck (`pilot.md`, section 11).
-4. **Review window.** Card sheets, deck plans and trial-game logs are open to challenge.
-5. **Freeze.** After the review window closes, nothing changes: no decklist, card model, pilot version or setting.
-6. **Baseline runs.** Profiles are published.
-7. **Rounds.** Pairings and results are posted on Reddit after each round.
-8. **Results.** Final standings, seeds, logs and the standard analyses (`pilot.md`, section 15) are published.
+2. **Card sheets and deck reading.** For each deck the pilot checks the list, writes the card sheet and deck analysis, builds and tests the engine, reads the deck in discovery games and audits it (`pilot.md`, Part 3, steps 1 to 6).
+3. **Review window.** Card sheets, deck plans, test positions, discovery logs and audits are open to challenge.
+4. **Freeze.** After the review window closes, nothing changes: no decklist, card model, pilot version or setting.
+5. **Baseline runs** (`pilot.md`, Part 3, steps 7 to 10). Profiles and reports are published.
+6. **Results.** The match table, standings, seeds and logs are posted on Reddit and in the repository.
 
 ## Review and rulings
 
 - During the review window, anyone may challenge a card model or a rules error by pointing to a card sheet entry or a logged game.
 - Challenges are made in the place named in Settings.
 - The organizer rules on each challenge. Every ruling is recorded in `rulings.md`.
-- Strategy is not open to challenge. The pilot accepts no advice on how to play a deck, before or after submission.
-- A deck flagged for unmodeled clauses or for reaching compute limits may be kept, replaced or withdrawn by its submitter before the freeze. A replacement goes through the same steps.
+- Strategy, including the methods and judgment the pilot chose, is not open to challenge (`pilot.md`, 1.8).
+- A deck flagged for unmodeled clauses or for compute (`pilot.md`, 1.5) may be kept, replaced or withdrawn by its submitter before the freeze. A replacement goes through the same steps.
 
 ## What is published
 
-- For every deck: decklist, card sheet, deck plan, baseline profile, test positions and report.
-- For the event: pairings, match results, standings, seeds, game logs and rulings.
+- For every deck: decklist, card sheet, deck analysis, deck plan, test positions, baseline profile and report.
+- For the event: the match table, standings, seeds, game logs and rulings.
 - The versions of `pilot.md` and of this file that the event used.
 
 ## Settings
@@ -134,19 +77,7 @@ The event runs in this order. Dates are in Settings.
 | Submission deadline | To be set | |
 | Legality date | To be set | The submission deadline |
 | Decks per player | To be set | 1 |
-| Publication date for private lists | To be set | When round 1 results are posted |
+| Publication date for private lists | To be set | When results are posted |
 | Review window | To be set | 7 days |
 | Where challenges are made | To be set | Issues on the repository |
-| Turns per game | 5 on the play, 4 on the draw | Fixed by the turn 5 rule |
-| Discovery games | To be set | 200 per round, 2 rounds |
-| Baseline games per deck | To be set | 1,000 (500 in each seat) |
-| Games per mulligan bar | 300 | Fixed in `pilot.md`, section 9 |
-| Games per match | To be set | 1,000 (500 in each seat) |
-| Draw band | To be set | Drawn if the leading deck has under 53% of games |
-| Match points | To be set | Win 3, draw 1, loss 0 |
-| Swiss rounds | To be set | 3 for 8 decks, 4 for 9 to 16, 5 for 17 to 32 |
-| Tiebreaks | To be set | Share of all games won, then score against opponent A |
-| Compute limits | Set after submissions close | See `pilot.md`, section 11 |
 | Event seed | Published with results | |
-
-Why a 53% draw band: with 1,000 games, chance alone moves a deck's share of games by about 1.6 points, so a lead under 3 points is not reliable evidence that one deck is faster.
