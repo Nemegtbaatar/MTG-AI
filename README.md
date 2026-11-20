@@ -1,14 +1,14 @@
 # Modern Goldfish Tournament
 
-A Magic: The Gathering tournament in which players submit Modern decklists and an AI plays them. There is no interaction between players: each deck is played alone, and a game goes to the deck that wins first.
+A Magic: The Gathering tournament in which players submit Modern decklists and an AI plays them. There is no interaction between players: each deck is played alone, and matches are decided by which deck wins faster.
 
 **Status:** not yet open. Dates will be posted here and on Reddit.
 
 ## How it works
 
 1. You submit a decklist. Nothing else is needed, and nothing else is used.
-2. The AI pilot reads the deck, works out how it wins, and plays it against a generic opponent to measure how fast it is.
-3. Decks are paired. Each deck adjusts its mulligans and play to its opponent's measured speed, and the faster deck wins the game.
+2. The AI pilot reads the deck, works out how it wins, and plays it 1,000 times against the same generic opponent to measure how fast it is: its baseline profile.
+3. Every deck is paired with every other. Each match result is computed from the two decks' profiles, and standings are by average match win.
 4. One special rule keeps games short: the deck on the play loses at the end of its turn 5 if it has not won.
 
 ## Take part
@@ -21,13 +21,14 @@ A Magic: The Gathering tournament in which players submit Modern decklists and a
 
 | File | What it covers |
 |---|---|
-| [tournament.md](tournament.md) | Event rules: submissions, matches, the turn 5 rule, structure, schedule and settings |
-| [pilot.md](pilot.md) | How the AI plays a single deck |
+| [tournament.md](tournament.md) | How the event is run: submissions, review, schedule, standings and settings |
+| [pilot.md](pilot.md) | Every rule for playing and scoring a deck: the turn 5 rule, the opponent, the baseline, match win, compute limits, and how the AI plays |
 | [instructions.md](instructions.md) | Testing a deck with your own AI |
 | [rulings.md](rulings.md) | Challenges raised in review and the organizer's rulings |
 | [CHANGELOG.md](CHANGELOG.md) | Version history of the pilot and the rules |
 | `decks/` | One folder per deck: decklist, card sheet, deck plan, baseline profile, test positions, report |
-| `results/` | Pairings and results by round, standings, seeds and game logs |
+| `tools/` | Shared code the pilot may use: `wincredit.py` |
+| `results/` | The match table, standings, seeds and game logs |
 
 The `decks/` and `results/` folders are filled in as the event runs.
 
